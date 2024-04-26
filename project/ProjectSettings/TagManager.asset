@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - apple
+  - Tree
+  - end of the game obstacle
+  - Trash
+  - Wall
+  - Slide
+  - Heart
   layers:
   - Default
   - TransparentFX

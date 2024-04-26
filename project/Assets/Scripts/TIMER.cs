@@ -4,34 +4,49 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class NewBehaviourScript : MonoBehaviour
+public class TimerScript : MonoBehaviour
 {
-    public float timeRemaining = 0;
-    public bool timeIsRunning = true;
+    [SerializeField] GameObject gameLogic;
+    private float timeRemaining;
+    private bool timeIsRunning = true;
     public TMP_Text timeText;
+    public void SetTimeIsRunning(bool timeIsRunning)
+    {
+        this.timeIsRunning = timeIsRunning;
+    }
+    public void SetTimeRemaining(float time)
+    {
+        timeRemaining = time;
+    }
+    public float GetTimeRemaining()
+    {
+        return timeRemaining;
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
+        timeRemaining = 5 * 60;
         timeIsRunning = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(timeIsRunning == true)
+        if (timeIsRunning)
         {
-            if (timeRemaining >= 0) 
+            if (timeRemaining >= 0)
             {
-                timeRemaining += Time.deltaTime;
+                timeRemaining -= Time.deltaTime; // Subtract Time.deltaTime to make the time run backward
                 DisplayTime(timeRemaining);
             }
+            else
+            {
+                gameLogic.GetComponent<GameLogic>().LostTheGame();
+            }
         }
-
     }
+
     void DisplayTime(float timeToDisplay)
     {
-        timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timeText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
